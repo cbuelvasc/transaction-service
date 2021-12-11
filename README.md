@@ -20,6 +20,8 @@
 
 | Endpoint	                  | Method   | Status | Description    		   	                        |
 |:---------------------------:|:--------:|:------:|:-----------------------------------------------:|
+| `/actuator`                 | `GET`    | 200    | Get info of actuator.                           |
+| `/actuator/refresh`         | `POST`   | 200    | Update properties.                              |
 | `/actuator/info`            | `GET`    | 200    | Get info of service.                            |
 | `/actuator/health`          | `GET`    | 200    | Get health of service.                          |
 | `/actuator/health/readiness`| `GET`    | 200    | Get readiness state of service.                 |
