@@ -48,3 +48,12 @@ After building the application, you can also run it from the Java CLI:
 ```bash
 java -jar build/libs/transaction-service-0.0.1-SNAPSHOT.jar
 ```
+
+## Docker Registry
+```bash
+docker tag transaction-service:0.0.1-SNAPSHOT cbuelvasc/transaction-service:0.0.1-SNAPSHOT
+```
+
+```bash
+docker push cbuelvasc/transaction-service:0.0.1-SNAPSHOT
+```
