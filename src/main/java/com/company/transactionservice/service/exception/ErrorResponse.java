@@ -1,5 +1,6 @@
 package com.company.transactionservice.service.exception;
 
+import com.company.transactionservice.service.ErrorCode;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.http.HttpStatus;
 
@@ -16,6 +17,8 @@ public class ErrorResponse {
 
     private String message;
 
+    private String errorCode;
+
     private String stackTrace;
 
     private Object data;
@@ -31,9 +34,18 @@ public class ErrorResponse {
         this.message = message;
     }
 
-    public ErrorResponse(HttpStatus httpStatus, String message, String stackTrace) {
+    public ErrorResponse(HttpStatus httpStatus, String errorCode, String message, String stackTrace) {
         this(httpStatus, message);
+        this.errorCode = errorCode;
         this.stackTrace = stackTrace;
+    }
+
+    public ErrorResponse(HttpStatus httpStatus, String errorCode, String message) {
+        this();
+        this.code = httpStatus.value();
+        this.errorCode = errorCode;
+        this.status = httpStatus.name();
+        this.message = message;
     }
 
     public ErrorResponse(HttpStatus httpStatus, String message, String stackTrace, Object data) {
@@ -71,6 +83,14 @@ public class ErrorResponse {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getErrorCode() {
+        return errorCode;
+    }
+
+    public void setErrorCode(String errorCode) {
+        this.errorCode = errorCode;
     }
 
     public String getStackTrace() {

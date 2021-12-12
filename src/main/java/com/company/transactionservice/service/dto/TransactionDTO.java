@@ -35,13 +35,30 @@ public class TransactionDTO {
     }
 
     public TransactionDTO(Transaction transaction) {
-        this.id = transaction.id();
-        this.amount = transaction.amount();
-        this.taxCollected = transaction.taxCollected();
-        this.currency = transaction.currency();
-        this.originAccount = transaction.originAccount();
-        this.destinationAccount = transaction.destinationAccount();
-        this.description = transaction.description();
+        this.id = transaction.getId();
+        this.amount = transaction.getAmount();
+        this.taxCollected = transaction.getTaxCollected();
+        this.currency = transaction.getCurrency();
+        this.originAccount = transaction.getOriginAccount();
+        this.destinationAccount = transaction.getDestinationAccount();
+        this.description = transaction.getDescription();
+    }
+
+    public TransactionDTO(Double amount, String currency, String originAccount, String destinationAccount, String description) {
+        this.amount = amount;
+        this.currency = currency;
+        this.originAccount = originAccount;
+        this.destinationAccount = destinationAccount;
+        this.description = description;
+    }
+
+    public TransactionDTO(Double amount, Double taxCollected, String currency, String originAccount, String destinationAccount, String description) {
+        this.amount = amount;
+        this.taxCollected = taxCollected;
+        this.currency = currency;
+        this.originAccount = originAccount;
+        this.destinationAccount = destinationAccount;
+        this.description = description;
     }
 
     public TransactionDTO(UUID id, Double amount, String currency, String originAccount, String destinationAccount, String description) {

@@ -21,9 +21,25 @@ public class TransactionDataLoader {
 
     @EventListener(ApplicationReadyEvent.class)
     public void loadBookTestData() {
-        var book1 = new Transaction(UUID.randomUUID(), 100.0, 1.0, "USD", "00001","00002","Pay data");
-        var book2 = new Transaction(UUID.randomUUID(), 200.0, 2.0, "USD", "00002", "00001","Pay data");
-        transactionRepository.save(book1);
-        transactionRepository.save(book2);
+        var transactionOne = new Transaction();
+        transactionOne.setId(UUID.randomUUID());
+        transactionOne.setAmount(100.0);
+        transactionOne.setTaxCollected(1.0);
+        transactionOne.setCurrency("USD");
+        transactionOne.setOriginAccount("00001");
+        transactionOne.setDestinationAccount("00002");
+        transactionOne.setDescription("Pay data");
+        //transactionRepository.save(transactionOne);
+
+        var transactionTwo = new Transaction();
+        transactionTwo.setId(UUID.randomUUID());
+        transactionTwo.setAmount(200.0);
+        transactionTwo.setTaxCollected(2.0);
+        transactionTwo.setCurrency("USD");
+        transactionTwo.setOriginAccount("00002");
+        transactionTwo.setDestinationAccount("00001");
+        transactionTwo.setDescription("Pay data");
+        //transactionRepository.save(transactionTwo);
+
     }
 }

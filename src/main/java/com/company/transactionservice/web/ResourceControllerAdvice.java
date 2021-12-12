@@ -1,8 +1,7 @@
 package com.company.transactionservice.web;
 
-import com.company.transactionservice.service.exception.AlreadyExistsException;
-import com.company.transactionservice.service.exception.ErrorResponse;
-import com.company.transactionservice.service.exception.NotFoundException;
+import com.company.transactionservice.service.ErrorCode;
+import com.company.transactionservice.service.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -39,5 +38,23 @@ public class ResourceControllerAdvice {
             errorsMap.put(fieldName, errorMessage);
         });
         return errorsMap;
+    }
+
+    @ExceptionHandler(InsufficientFoundsException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    ResponseEntity<ErrorResponse> handle(InsufficientFoundsException ex) {
+        return new ResponseEntity<>(new ErrorResponse(HttpStatus.BAD_REQUEST, ErrorCode.INSUFFICIENT_FOUNDS.getErrorCode(), ex.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ExceedLimitException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    ResponseEntity<ErrorResponse> handle(ExceedLimitException ex) {
+        return new ResponseEntity<>(new ErrorResponse(HttpStatus.BAD_REQUEST, ErrorCode.EXCEED_LIMIT.getErrorCode(), ex.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(NotSupportedCurrencyException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    ResponseEntity<ErrorResponse> handle(NotSupportedCurrencyException ex) {
+        return new ResponseEntity<>(new ErrorResponse(HttpStatus.BAD_REQUEST, ErrorCode.NOT_SUPPORTED.getErrorCode(), ex.getMessage()), HttpStatus.BAD_REQUEST);
     }
 }

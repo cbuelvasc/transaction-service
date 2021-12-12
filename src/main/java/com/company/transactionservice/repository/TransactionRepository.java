@@ -1,19 +1,16 @@
 package com.company.transactionservice.repository;
 
 import com.company.transactionservice.domain.Transaction;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.List;
 import java.util.UUID;
 
-public interface TransactionRepository {
+@Repository
+public interface TransactionRepository extends JpaRepository<Transaction, UUID> {
 
-    Iterable<Transaction> findAll();
+    List<Transaction> findByOriginAccount(String accountNumber);
 
-    Optional<Transaction> findById(UUID id);
-
-    boolean existsById(UUID id);
-
-    Transaction save(Transaction transaction);
-
-    void deleteById(UUID id);
+    List<Transaction> findByOriginAccountOrderByCreatedDate(String accountNumber);
 }
