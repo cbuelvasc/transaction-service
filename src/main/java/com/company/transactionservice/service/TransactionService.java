@@ -1,10 +1,9 @@
 package com.company.transactionservice.service;
 
 import com.company.transactionservice.domain.Account;
-import com.company.transactionservice.domain.AccountRepository;
+import com.company.transactionservice.repository.AccountRepository;
 import com.company.transactionservice.domain.Transaction;
 import com.company.transactionservice.repository.TransactionRepository;
-import com.company.transactionservice.service.dto.AccountDTO;
 import com.company.transactionservice.service.dto.TransactionDTO;
 import com.company.transactionservice.service.exception.ExceedLimitException;
 import com.company.transactionservice.service.exception.InsufficientFoundsException;
@@ -42,6 +41,15 @@ public class TransactionService {
     @Transactional(readOnly = true)
     public Page<TransactionDTO> getAllTransactions(Pageable pageable) {
         return transactionRepository.findAll(pageable).map(TransactionDTO::new);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<TransactionDTO> getAllTransactionsByOriginAccount(Pageable pageable, String originAccount) {
+        accountRepository
+                .findByAccountNumber(originAccount)
+                .orElseThrow(() -> new NotFoundException(String.format("Not found origin account with id: %s", originAccount)));
+
+        return transactionRepository.findByOriginAccount(pageable, originAccount).map(TransactionDTO::new);
     }
 
     @Transactional(readOnly = true)

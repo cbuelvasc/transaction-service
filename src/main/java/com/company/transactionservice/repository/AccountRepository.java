@@ -1,5 +1,6 @@
-package com.company.transactionservice.domain;
+package com.company.transactionservice.repository;
 
+import com.company.transactionservice.domain.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

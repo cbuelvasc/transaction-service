@@ -1,7 +1,7 @@
 package com.company.transactionservice.service;
 
 import com.company.transactionservice.domain.Account;
-import com.company.transactionservice.domain.AccountRepository;
+import com.company.transactionservice.repository.AccountRepository;
 import com.company.transactionservice.repository.TransactionRepository;
 import com.company.transactionservice.service.dto.AccountDTO;
 import com.company.transactionservice.service.exception.AlreadyExistsException;

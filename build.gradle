@@ -51,10 +51,6 @@ dependencyManagement {
 	}
 }
 
-springBoot {
-	buildInfo()
-}
-
 bootBuildImage {
 	imageName = "${project.name}:${project.version}"
 	environment = ["BP_JVM_VERSION": "17.*"]

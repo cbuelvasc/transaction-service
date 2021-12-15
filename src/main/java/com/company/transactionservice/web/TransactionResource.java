@@ -1,6 +1,5 @@
 package com.company.transactionservice.web;
 
-import com.company.transactionservice.domain.Transaction;
 import com.company.transactionservice.service.TransactionService;
 import com.company.transactionservice.service.dto.TransactionDTO;
 import com.company.transactionservice.web.util.PaginationUtil;
@@ -26,7 +25,7 @@ public class TransactionResource {
     private static final Logger LOG = LoggerFactory.getLogger(TransactionResource.class);
 
     private final TransactionService transactionService;
-    
+
     public TransactionResource(TransactionService bookService) {
         this.transactionService = bookService;
     }
@@ -40,24 +39,33 @@ public class TransactionResource {
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/transactions/byOriginAccount/{originAccount}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<TransactionDTO>> getAllTransactionsByOriginAccount(Pageable pageable, @PathVariable String originAccount) {
+        LOG.debug("REST request to get all Transfers");
+
+        final Page<TransactionDTO> page = transactionService.getAllTransactionsByOriginAccount(pageable, originAccount);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
     @GetMapping(value = "/transactions/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TransactionDTO> getTransaction(@PathVariable UUID id) {
         LOG.debug("REST request to get Transfer : {}", id);
         return ResponseEntity.ok(transactionService.getTransaction(id));
     }
-    
+
     @PostMapping(value = "/transactions", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<TransactionDTO> createTransaction(@Valid @RequestBody TransactionDTO transactionDTO) {
         return new ResponseEntity<>(transactionService.createTransaction(transactionDTO), HttpStatus.CREATED);
     }
-    
-    @DeleteMapping(value ="/transactions/{id}")
+
+    @DeleteMapping(value = "/transactions/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteTransaction(@PathVariable UUID id) {
         transactionService.removeTransaction(id);
     }
-    
+
     @PutMapping(value = "/transactions/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TransactionDTO> updateTransaction(@PathVariable UUID id, @Valid @RequestBody TransactionDTO transactionDTO) {
         return ResponseEntity.ok(transactionService.editTransactionDetails(id, transactionDTO));
